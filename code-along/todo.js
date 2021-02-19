@@ -19,7 +19,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
       <a href="#" class="sign-out text-pink-500 underline">Sign out</a>    
     `
 
-    document.querySelectorA('.sign-out').addEventListener('click', function(event) {
+    document.querySelector('.sign-out').addEventListener('click', function(event) {
       event.preventDefault()
       firebase.auth().signOut() //signs me out
       document.location.href = 'todo.html' //defaults to original look of website
