@@ -38,10 +38,11 @@ firebase.auth().onAuthStateChanged(async function(user) {
       })
       let postId = docRef.id // the newly created document's ID
       renderPost(postId, postUsername, postImageUrl, postNumberOfLikes)
-    })
+    })                         
 
     // Render all posts when the page is loaded
     let querySnapshot = await db.collection('posts').orderBy('created').get()
+                                      
     let posts = querySnapshot.docs
     for (let i=0; i<posts.length; i++) {
       let postId = posts[i].id
@@ -110,9 +111,13 @@ async function renderPost(postId, postUsername, postImageUrl, postNumberOfLikes)
 // Method: Refactor the existing domain model (see ../images/domain-model-kelloggram.png)
 
 // Step 1: In the Firebase Console, delete the existing posts collection if one exists
+  // deleted by going into firebase > firestore and deleting the posts
 // Step 2: Remove the username from the form, replace with the current user's name
+  //
 // Step 3: "Liking" should add a new "likes" document in Firestore with the post ID 
 //         and current user ID
+
+
 // Step 4: "Liking" should only be allowed once per user per post – check for an 
 //         existing "like" before adding a new "likes" document, i.e. get() the likes 
 //         collection and filter by postId and userId, and ask for the .size Tip: 
