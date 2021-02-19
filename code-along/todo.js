@@ -33,7 +33,8 @@ firebase.auth().onAuthStateChanged(async function(user) {
   
       if (todoText.length > 0) {
         let docRef = await db.collection('todos').add({
-          text: todoText
+          text: todoText,
+          userId: user.uid
         })
   
         let todoId = docRef.id
@@ -55,8 +56,11 @@ firebase.auth().onAuthStateChanged(async function(user) {
       }
     })
   
-    let querySnapshot = await db.collection('todos').get()
-    console.log(`Number to todos in collection: ${querySnapshot.size}`)
+    // let querySnapshot = await db.collection('todos').get()
+    // console.log(`Number to todos in collection: ${querySnapshot.size}`)
+    let querySnapshot = await db.collection('todos')
+                                .where('userId', "==", user.uid)  //where matches the uid to the todo items
+                                .get()    
   
     let todos = querySnapshot.docs
     for (let i=0; i<todos.length; i++) {
