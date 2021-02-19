@@ -27,7 +27,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
     // Listen for the form submit and create/render the new post
     document.querySelector('form').addEventListener('submit', async function(event) {
       event.preventDefault()
-      let postUsername = document.querySelector('#username').value
+      let postUsername = user.displayName //For Step 2 modified let postUsername = document.querySelector('#username').value
       let postImageUrl = document.querySelector('#image-url').value
       let postNumberOfLikes = 0
       let docRef = await db.collection('posts').add({ 
