@@ -73,6 +73,8 @@ firebase.auth().onAuthStateChanged(async function(user) {
   } else {
     console.log('no user')
 
+    document.querySelector('form').classList.add('hidden')
+
     // Step 1: Un-comment to add FirebaseUI Auth
   // // Initializes FirebaseUI Auth
   let ui = new firebaseui.auth.AuthUI(firebase.auth())
