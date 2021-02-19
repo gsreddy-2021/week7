@@ -4,6 +4,12 @@
 //document.addEventListener('DOMContentLoaded', async function(event) {
   
 firebase.auth().onAuthStateChanged(async function(user) {
+
+  if (user) {
+    console.log('user logged in')
+  } else {
+    console.log('no user')
+  }
       
   let db = firebase.firestore()
 
