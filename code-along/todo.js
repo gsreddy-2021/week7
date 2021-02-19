@@ -1,8 +1,10 @@
 // Step 2: Change main event listener from DOMContentLoaded to 
 // firebase.auth().onAuthStateChanged and move code that 
 // shows login UI to only show when signed out
-document.addEventListener('DOMContentLoaded', async function(event) {
+//document.addEventListener('DOMContentLoaded', async function(event) {
   
+firebase.auth().onAuthStateChanged(async function(user) {
+      
   let db = firebase.firestore()
 
   document.querySelector('form').addEventListener('submit', async function(event) {
