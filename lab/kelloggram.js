@@ -44,7 +44,14 @@ firebase.auth().onAuthStateChanged(async function(user) {
       let postData = posts[i].data()
       let postUsername = postData.username
       let postImageUrl = postData.imageUrl
-      let postNumberOfLikes = postData.likes
+
+      // Step 5
+      // let postNumberOfLikes = postData.likes
+      let querySnapshot = await db.collection('likes')
+                                  .where('postId', '==', postId)
+                                  .get()
+      let postNumberOfLikes = querySnapshot.size
+      
       renderPost(postId, postUsername, postImageUrl, postNumberOfLikes)
     }
   } else {
