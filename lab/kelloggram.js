@@ -99,9 +99,18 @@ async function renderPost(postId, postUsername, postImageUrl, postNumberOfLikes)
     let existingNumberOfLikes = document.querySelector(`.post-${postId} .likes`).innerHTML
     let newNumberOfLikes = parseInt(existingNumberOfLikes) + 1
     document.querySelector(`.post-${postId} .likes`).innerHTML = newNumberOfLikes
-    await db.collection('posts').doc(postId).update({
-      likes: firebase.firestore.FieldValue.increment(1)
+    
+    let currentUser = firebase.auth().currentUser
+
+    // Step 3:
+    await db.collection('likes').add({
+      postId: postId,
+      userId: currentUser.uid
     })
+    // await db.collection('posts').doc(postId).update({
+    //   likes: firebase.firestore.FieldValue.increment(1)
+    // })
+
   })
 }
 
