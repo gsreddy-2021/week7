@@ -96,17 +96,28 @@ async function renderPost(postId, postUsername, postImageUrl, postNumberOfLikes)
   document.querySelector(`.post-${postId} .like-button`).addEventListener('click', async function(event) {
     event.preventDefault()
     console.log(`post ${postId} like button clicked!`)
-    let existingNumberOfLikes = document.querySelector(`.post-${postId} .likes`).innerHTML
-    let newNumberOfLikes = parseInt(existingNumberOfLikes) + 1
-    document.querySelector(`.post-${postId} .likes`).innerHTML = newNumberOfLikes
+    
     
     let currentUser = firebase.auth().currentUser
+
+    // Step 4
+    let querySnapshot = await db.collection('likes')
+                                .where('postId', '==', postId)
+                                .where('userId', '==', currentUser.uid)
+                                .get()
+
+    if (querySnapshot.size == 0) {}
 
     // Step 3:
     await db.collection('likes').add({
       postId: postId,
       userId: currentUser.uid
     })
+
+    let existingNumberOfLikes = document.querySelector(`.post-${postId} .likes`).innerHTML
+    let newNumberOfLikes = parseInt(existingNumberOfLikes) + 1
+    document.querySelector(`.post-${postId} .likes`).innerHTML = newNumberOfLikes
+     
     // await db.collection('posts').doc(postId).update({
     //   likes: firebase.firestore.FieldValue.increment(1)
     // })
@@ -132,8 +143,10 @@ async function renderPost(postId, postUsername, postImageUrl, postNumberOfLikes)
 //         collection and filter by postId and userId, and ask for the .size Tip: 
 //         you can combine .where() methods, for example:
 //         db.collection('likes').where('postId', '==', postId).where('userId', '==', userId).get()
+
 // Step 5: The code to increment the number of likes in the UI when the like button 
 //         is clicked should be inside the conditional logic written in Step 4
+
 // Step 6: Get the actual number of likes from Firestore for each post when the
 //         page is loaded, using a .get() with .where() conditions and asking for
 //         the .size
