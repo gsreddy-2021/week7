@@ -15,6 +15,17 @@ firebase.auth().onAuthStateChanged(async function(user) {
       email: user.email
     })
 
+    document.querySelector('.sign-in-or-sign-out').innerHTML = `
+      <a href="#" class="sign-out text-pink-500 underline">Sign out</a>    
+    `
+
+    document.querySelectorA('.sign-out').addEventListener('click', function(event) {
+      event.preventDefault()
+      firebase.auth().signOut() //signs me out
+      document.location.href = 'todo.html' //defaults to original look of website
+    })
+
+
     document.querySelector('form').addEventListener('submit', async function(event) {
       event.preventDefault()
   
